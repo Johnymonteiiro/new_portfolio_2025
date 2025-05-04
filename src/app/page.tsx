@@ -1,101 +1,97 @@
-import Image from "next/image";
+"use client";
+
+import JourneyCard from "@/components/journey-card";
+import Profile from "@/components/profile";
+import ProjectCard from "@/components/project-card";
+import ServiceCard from "@/components/service-card";
+import { MonitorIcon } from "@/components/ui/icon/monitor";
+import { PenIcon } from "@/components/ui/icon/pen";
+import { content_data } from "@/static_data/content";
+
+import BlogCard from "@/components/blog-card";
+import RecommendationCard from "@/components/recommendation-card";
+import Sidebar from "@/components/sidebar";
+import { useActiveLink } from "@/hooks/useActive";
 
 export default function Home() {
+  const [refCallback, active] = useActiveLink();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main
+      id="main-container"
+      className="max-w-[1200px] flex mx-auto px-4 relative"
+    >
+      <section className="max-w-[900px]">
+        <Profile refCallback={refCallback} />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        <div className="mt-32" id="Service" ref={refCallback}>
+          <h2 className="text-2xl">Service</h2>
+
+          <div className="flex items-center pt-8">
+            <ServiceCard
+              iconBg="green-flat"
+              icon={<MonitorIcon size={25} className="stroke-green" />}
+              title={content_data.service.service_1.title}
+              description={content_data.service.service_1.description}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="px-8">
+              <p>and</p>
+            </div>
+            <ServiceCard
+              iconBg="purple-flat"
+              icon={<PenIcon size={25} className="stroke-purple" />}
+              title={content_data.service.service_2.title}
+              description={content_data.service.service_2.description}
+            />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div id="Projects" ref={refCallback} className="mt-32">
+          <h2 className="text-2xl">Projects</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+            {content_data.projects.map((project, index) => {
+              return (
+                <ProjectCard
+                  key={index}
+                  title={project.title}
+                  category={project.category}
+                  recent={project.recent}
+                  link={project.link}
+                  thumbnail_image={project.thumbnail_image.src}
+                  description={project.description}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-32 pl" id="My journey" ref={refCallback}>
+          <h2 className="text-2xl mb-12">My journey</h2>
+          <JourneyCard />
+          <JourneyCard />
+        </div>
+
+        <div className="mt-32" id="Latest blog" ref={refCallback}>
+          <h2 className="text-2xl mb-12">Latest blog</h2>
+          <BlogCard />
+          <BlogCard />
+        </div>
+
+        <div className="mt-32" id="Recommendations" ref={refCallback}>
+          <h2 className="text-2xl mb-12">Recommendations</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 place-items-center">
+            <RecommendationCard />
+            <RecommendationCard />
+            <RecommendationCard className="md:col-span-2 place-self-center" />
+          </div>
+        </div>
+      </section>
+
+      <Sidebar
+        sections={content_data.sidebar.home}
+        active={active}
+        className="mt-20"
+      />
+    </main>
   );
 }
