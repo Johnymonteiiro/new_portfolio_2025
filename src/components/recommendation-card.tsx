@@ -1,6 +1,5 @@
-import React from "react";
-import Image from "next/image";
 import clsx from "clsx";
+import Image from "next/image";
 import ImageProfile from "../app/assets/jhony.png";
 import { LinkedinIcon } from "./ui/icon/linkedin";
 
@@ -13,7 +12,7 @@ export default function RecommendationCard({
     <div
       className={clsx(
         className,
-        "bg-card-bg border rounded-md border-border-color p-5 w-full max-w-md"
+        "bg-card-bg border rounded-md border-border-color p-5 w-full"
       )}
     >
       <div className="flex items-center justify-between pb-8">

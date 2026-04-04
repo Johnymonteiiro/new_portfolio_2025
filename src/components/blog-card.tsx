@@ -1,11 +1,26 @@
-import React from "react";
-import { BookIcon } from "./ui/icon/book";
 import Link from "next/link";
+import { BookIcon } from "./ui/icon/book";
 
-export default function BlogCard() {
+interface BlogCardProps {
+  date: Date;
+  description: string;
+  slug: string;
+  section_title: string;
+}
+export default function BlogCard({
+  date,
+  description,
+  slug,
+  section_title,
+}: BlogCardProps) {
+  const formated_date = date.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   return (
     <div className="border rounded-md border-border-color p-5 w-full mb-6 transition-all duration-200 cursor-pointer hover:border-green">
-      <Link href="/blog/fecth">
+      <Link href={`/blog/${slug}`}>
         <div className="flex items-center justify-between pb-7">
           <div className="flex items-center">
             <div
@@ -13,18 +28,13 @@ export default function BlogCard() {
             >
               <BookIcon size={24} className="stroke-green" />
             </div>
-            <h3 className="text-xl">Fetching data with next.js 15</h3>
+            <h3 className="text-xl">{section_title}</h3>
           </div>
 
-          <p className="text-gray">12/07/2024</p>
+          <p className="text-gray">{formated_date}</p>
         </div>
 
-        <p className="font-normal text-gray">
-          I develop modern websites and software, high performance, clean code
-          and AI integration. My focus is on creating intuitive experiences and
-          solutions that truly make an impact. If you're looking for innovation
-          and results...
-        </p>
+        <p className="font-normal text-gray">{description}</p>
       </Link>
     </div>
   );

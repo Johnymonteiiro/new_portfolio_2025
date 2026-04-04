@@ -1,6 +1,5 @@
-import Image from "next/image";
-import React from "react";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 interface ProjectProps {
   title: string;
@@ -24,8 +23,8 @@ export default function ProjectCard({
       href={link}
       target="_blank"
       className={`${
-        recent ? "col-span-2 w-full" : "max-w-[450px]"
-      } border rounded-md border-border-color p-5 w-full`}
+        recent ? "col-span-1 lg:col-span-2 w-full" : "w-auto"
+      } border rounded-md border-border-color p-5 w-full transition-all duration-200 cursor-pointer hover:border-green`}
     >
       <div
         className={`${

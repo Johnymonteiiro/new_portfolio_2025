@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import profile_image from "../app/assets/jhony.png";
+import InterestCircle from "./interestCircle";
+import { CommentIcon } from "./ui/icon/comment";
 import { FileIcon } from "./ui/icon/file";
 import { GithubIcon } from "./ui/icon/github";
+import { IAcon } from "./ui/icon/ia";
+import { InnovationIcon } from "./ui/icon/innovation";
 import { InstagramIcon } from "./ui/icon/insta";
 import { LinkedinIcon } from "./ui/icon/linkedin";
 import { MessageIcon } from "./ui/icon/message";
-import InterestCircle from "./interestCircle";
-import { CommentIcon } from "./ui/icon/comment";
-import { IAcon } from "./ui/icon/ia";
-import { InnovationIcon } from "./ui/icon/innovation";
 import { SaasIcon } from "./ui/icon/saas";
 
 export default function Profile({
@@ -26,12 +26,13 @@ export default function Profile({
             src={profile_image}
             width={134}
             height={134}
+            quality={100}
             alt="logo-image"
             className="rounded-md border-4 border-border-color"
           />
 
           <div className="flex items-center space-x-2 pt-3">
-            <div className="relative w-7 h-7">
+            <div className="relative w-2 h-2 lg:w-7 lg:h-7">
               <div className="absolute inset-0 rounded-full bg-green-flat animate-multiPulse"></div>
               <div className="absolute inset-0 rounded-full bg-green animate-multiPulse delay-150"></div>
               <div className="absolute inset-2 rounded-full bg-green"></div>
@@ -82,7 +83,7 @@ export default function Profile({
 
       <div>
         <h2 className="text-2xl mb-12">Interest area</h2>
-        <div className="flex items-center justify-evenly relative">
+        <div className="flex items-center flex-col md:justify-evenly md:flex-row gap-8 relative">
           <InterestCircle
             icon={<SaasIcon size={40} className="fill-green" />}
             title="SaaS"
@@ -93,7 +94,7 @@ export default function Profile({
           <InterestCircle
             icon={<IAcon size={40} className="fill-purple" />}
             title="Artificial Intelligence"
-            className="bg-card-bg shadow-normal border absolute border-border-color"
+            className="bg-card-bg shadow-normal border md:absolute border-border-color"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, maiores
                perspiciatis iusto voluptates"
           />

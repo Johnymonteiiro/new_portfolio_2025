@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v \"^[[:space:]]*$\")",
+      "Bash(ls:*)",
+      "Bash(\"/c/Users/Johny/AppData/Roaming/npm/pnpm.cmd\" exec:*)",
+      "WebFetch(domain:prismic.io)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(rm:*)",
+      "Bash(rm .env.local)",
+      "Bash(\"/c/Users/Johny/AppData/Roaming/npm/pnpm.cmd\" remove:*)"
+    ]
+  }
+}

@@ -15,27 +15,25 @@ import { useActiveLink } from "@/hooks/useActive";
 
 export default function Home() {
   const [refCallback, active] = useActiveLink();
+
   return (
     <main
       id="main-container"
-      className="max-w-[1200px] flex mx-auto px-4 relative"
+      className="max-w-[1400px] flex mx-auto px-4 relative"
     >
-      <section className="max-w-[900px]">
+      <section className="max-w-[1100px]">
         <Profile refCallback={refCallback} />
 
         <div className="mt-32" id="Service" ref={refCallback}>
           <h2 className="text-2xl">Service</h2>
 
-          <div className="flex items-center pt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8">
             <ServiceCard
               iconBg="green-flat"
               icon={<MonitorIcon size={25} className="stroke-green" />}
               title={content_data.service.service_1.title}
               description={content_data.service.service_1.description}
             />
-            <div className="px-8">
-              <p>and</p>
-            </div>
             <ServiceCard
               iconBg="purple-flat"
               icon={<PenIcon size={25} className="stroke-purple" />}
@@ -48,7 +46,7 @@ export default function Home() {
         <div id="Projects" ref={refCallback} className="mt-32">
           <h2 className="text-2xl">Projects</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8">
             {content_data.projects.map((project, index) => {
               return (
                 <ProjectCard
@@ -65,7 +63,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-32 pl" id="My journey" ref={refCallback}>
+        <div className="mt-32" id="My journey" ref={refCallback}>
           <h2 className="text-2xl mb-12">My journey</h2>
           <JourneyCard />
           <JourneyCard />
@@ -73,8 +71,19 @@ export default function Home() {
 
         <div className="mt-32" id="Latest blog" ref={refCallback}>
           <h2 className="text-2xl mb-12">Latest blog</h2>
-          <BlogCard />
-          <BlogCard />
+          {content_data.blog
+            .map((blog, index) => {
+              return (
+                <BlogCard
+                  key={index}
+                  section_title={blog.title}
+                  slug={blog.slug}
+                  description={blog.description}
+                  date={blog.data}
+                />
+              );
+            })
+            .slice(0, 3)}
         </div>
 
         <div className="mt-32" id="Recommendations" ref={refCallback}>
@@ -88,7 +97,7 @@ export default function Home() {
       </section>
 
       <Sidebar
-        sections={content_data.sidebar.home}
+        sections={content_data.sidebar}
         active={active}
         className="mt-20"
       />

@@ -6,6 +6,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     container: {
@@ -28,11 +29,11 @@ const config: Config = {
         "border-color": "rgba(37, 38, 43, 1)",
       },
       fontSize: {
-        xlg: "1.75rem",
-        lg: "1rem",
-        md: "0.875rem",
-        sm: "0.75rem",
-        xs: "0.6875rem",
+        xlg: "1.75rem", // 28px
+        lg: "1rem", // 16px
+        md: "0.875rem", // 14px
+        sm: "0.75rem", // 12px
+        xs: "0.6875rem", // 11px
       },
       borderRadius: {
         lg: "var(--radius)",

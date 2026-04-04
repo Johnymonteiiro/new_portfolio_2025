@@ -2,41 +2,47 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 export function useActiveLink() {
   const [active, setActive] = useState<string>("");
+  const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionsRef = useRef<Set<HTMLElement>>(new Set());
 
   useEffect(() => {
-    const options = { threshold: 0.5 }; 
+    // rootMargin: "-10% top, 0 sides, -85% bottom" — fires when section
+    // enters the top 15% of the viewport, which works for any section height.
+    const options: IntersectionObserverInit = {
+      rootMargin: "-10% 0px -85% 0px",
+      threshold: 0,
+    };
+
     const observer = new IntersectionObserver((entries) => {
-      const intersectingEntries = entries.filter(
-        (entry) => entry.isIntersecting
+      const intersecting = entries.filter((e) => e.isIntersecting);
+
+      if (intersecting.length === 0) return;
+
+      // Pick the entry closest to the top of the viewport
+      intersecting.sort(
+        (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
       );
 
-      if (intersectingEntries.length > 0) {
-        intersectingEntries.sort(
-          (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
-        );
-
-        const closestEntry =
-          window.scrollY === 0
-            ? intersectingEntries[0]
-            : intersectingEntries[intersectingEntries.length - 1]; 
-
-        const sectionId = closestEntry.target.getAttribute("id");
-        if (sectionId) {
-          setActive(sectionId);
-        }
-      }
+      const sectionId = intersecting[0].target.getAttribute("id");
+      if (sectionId) setActive(sectionId);
     }, options);
 
-    sectionsRef.current.forEach((section) => observer.observe(section));
+    observerRef.current = observer;
 
-    return () => observer.disconnect();
+    // Observe any elements already added before this effect ran
+    sectionsRef.current.forEach((el) => observer.observe(el));
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
   }, []);
 
   const refCallback = useCallback((element: HTMLElement | null) => {
-    if (element && !sectionsRef.current.has(element)) {
-      sectionsRef.current.add(element);
-    }
+    if (!element || sectionsRef.current.has(element)) return;
+    sectionsRef.current.add(element);
+    // Observe immediately if the observer is already running
+    observerRef.current?.observe(element);
   }, []);
 
   return [refCallback, active] as const;

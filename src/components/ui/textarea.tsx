@@ -9,16 +9,14 @@ interface InputProps {
   className?: string;
   propriety: "user_name" | "user_email" | "user_service" | "user_message";
   placeholder: string;
-  type: string;
 }
 
-export const Input = ({
+export const TextArea = ({
   order,
   label,
   className,
-  propriety,
+  propriety = "user_message",
   placeholder,
-  type,
 }: InputProps) => {
   const {
     register,
@@ -33,8 +31,7 @@ export const Input = ({
           {label}
         </label>
       </div>
-      <input
-        type={type}
+      <textarea
         className={
           className ??
           "w-full bg-transparent font-thin pr-4 py-4 border-b border-border-color focus:outline-none focus:border-green"
