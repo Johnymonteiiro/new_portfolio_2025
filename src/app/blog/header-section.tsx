@@ -1,8 +1,8 @@
 "use client";
 
 import { CalendarIcon } from "@/components/ui/icon/calendar";
+import { calculateReadingTime } from "@/lib/reading-time";
 import { Clock1, MoveLeft } from "lucide-react";
-import { useMemo } from "react";
 
 interface BlogContentProps {
   date?: Date;
@@ -26,15 +26,7 @@ export function HeaderSection({
     year: "numeric",
   });
 
-  const readingTime = useMemo(() => {
-    const wordsPerMinute = 225;
-    const fullContent = content?.reduce((acc, curr) => {
-      return acc + " " + curr.text + " " + (curr.code || "");
-    }, "");
-
-    const wordCount = Number(fullContent?.trim().split(/\s+/).length);
-    return Math.ceil(wordCount / wordsPerMinute);
-  }, [content]);
+  const readingTime = content ? calculateReadingTime(content) : 1;
 
   return (
     <section>

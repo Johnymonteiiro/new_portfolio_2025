@@ -20,6 +20,7 @@ export function CodeBlock({ code, language }: Props) {
         customStyle={{
           margin: 0,
           borderRadius: "0.5rem",
+          fontSize: "1rem",
         }}
       >
         {code}

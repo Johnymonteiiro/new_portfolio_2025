@@ -31,7 +31,7 @@ export default function Header() {
             <MessageCircleMore className="text-gray" />
           </button>
 
-          <Form isOpen={isOpen} formRef={formRef} />
+          <Form isOpen={isOpen} formRef={formRef} className="top-[48px]" />
         </div>
       </div>
     </header>

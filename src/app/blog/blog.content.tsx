@@ -2,6 +2,7 @@
 
 import Sidebar from "@/components/sidebar";
 import { useActiveLink } from "@/hooks/useActive";
+import type { BlogPostSummary } from "@/types/prismic";
 import { CodeBlock } from "./code";
 
 interface BlogContentProps {
@@ -11,10 +12,11 @@ interface BlogContentProps {
     language: string;
     code?: string | null;
   }[];
+  allPosts?: BlogPostSummary[];
 }
 
-export function BlogContent({ content }: BlogContentProps) {
-  const [refCallback, active] = useActiveLink();
+export function BlogContent({ content, allPosts }: BlogContentProps) {
+  const [refCallback, active] = useActiveLink(content?.[0]?.sub_title ?? "");
   return (
     <section className="mt-16 flex relative">
       <div>
@@ -33,6 +35,7 @@ export function BlogContent({ content }: BlogContentProps) {
 
       <Sidebar
         active={active}
+        allPosts={allPosts}
         sections={content?.map((item) => ({
           section_title: item.sub_title,
         }))}

@@ -1,0 +1,63 @@
+{
+  "id": "journey",
+  "type": "SharedSlice",
+  "name": "Journey",
+  "description": "My Journey section — work experience timeline",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "section_title": {
+          "type": "Text",
+          "config": {
+            "label": "Section Title",
+            "placeholder": "My journey"
+          }
+        }
+      },
+      "items": {
+        "company_name": {
+          "type": "Text",
+          "config": {
+            "label": "Company Name",
+            "placeholder": "Leadcode"
+          }
+        },
+        "company_url": {
+          "type": "Link",
+          "config": {
+            "label": "Company URL",
+            "allowTargetBlank": true
+          }
+        },
+        "period": {
+          "type": "Text",
+          "config": {
+            "label": "Period",
+            "placeholder": "2022-2023"
+          }
+        },
+        "position": {
+          "type": "Text",
+          "config": {
+            "label": "Position",
+            "placeholder": "Fullstack Developer & Tech Leader"
+          }
+        },
+        "responsibilities": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Responsibilities",
+            "allowTargetBlank": false,
+            "multi": "list-item"
+          }
+        }
+      }
+    }
+  ]
+}

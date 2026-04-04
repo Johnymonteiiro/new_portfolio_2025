@@ -14,7 +14,7 @@ import Sidebar from "@/components/sidebar";
 import { useActiveLink } from "@/hooks/useActive";
 
 export default function Home() {
-  const [refCallback, active] = useActiveLink();
+  const [refCallback, active] = useActiveLink("About");
 
   return (
     <main
@@ -71,19 +71,18 @@ export default function Home() {
 
         <div className="mt-32" id="Latest blog" ref={refCallback}>
           <h2 className="text-2xl mb-12">Latest blog</h2>
-          {content_data.blog
-            .map((blog, index) => {
-              return (
-                <BlogCard
-                  key={index}
-                  section_title={blog.title}
-                  slug={blog.slug}
-                  description={blog.description}
-                  date={blog.data}
-                />
-              );
-            })
-            .slice(0, 3)}
+          {[...content_data.blog]
+            .sort((a, b) => b.data.getTime() - a.data.getTime())
+            .slice(0, 3)
+            .map((blog, index) => (
+              <BlogCard
+                key={index}
+                section_title={blog.title}
+                slug={blog.slug}
+                description={blog.description}
+                date={blog.data}
+              />
+            ))}
         </div>
 
         <div className="mt-32" id="Recommendations" ref={refCallback}>

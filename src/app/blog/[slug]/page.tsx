@@ -9,6 +9,12 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const content = content_data.blog.find((blog) => blog.slug === slug);
+  const allPosts = content_data.blog.map(({ title, slug, description, data }) => ({
+    title,
+    slug,
+    description,
+    data,
+  }));
 
   return (
     <main className="w-full max-w-[1200px] mx-auto px-4 mt-10">
@@ -17,7 +23,7 @@ export default async function Page({
         content={content?.content}
         section_title={content?.title}
       />
-      <BlogContent content={content?.content || []} />
+      <BlogContent content={content?.content || []} allPosts={allPosts} />
     </main>
   );
 }

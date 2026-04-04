@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-export function useActiveLink() {
-  const [active, setActive] = useState<string>("");
+export function useActiveLink(initialActive: string = "") {
+  const [active, setActive] = useState<string>(initialActive);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionsRef = useRef<Set<HTMLElement>>(new Set());
 
   useEffect(() => {
-    // rootMargin: "-10% top, 0 sides, -85% bottom" — fires when section
-    // enters the top 15% of the viewport, which works for any section height.
     const options: IntersectionObserverInit = {
       rootMargin: "-10% 0px -85% 0px",
       threshold: 0,
@@ -18,7 +16,6 @@ export function useActiveLink() {
 
       if (intersecting.length === 0) return;
 
-      // Pick the entry closest to the top of the viewport
       intersecting.sort(
         (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
       );
@@ -28,8 +25,6 @@ export function useActiveLink() {
     }, options);
 
     observerRef.current = observer;
-
-    // Observe any elements already added before this effect ran
     sectionsRef.current.forEach((el) => observer.observe(el));
 
     return () => {
@@ -38,10 +33,35 @@ export function useActiveLink() {
     };
   }, []);
 
+  // Activate the last section when the user reaches the bottom of the page,
+  // since it may never enter the IntersectionObserver detection zone.
+  useEffect(() => {
+    const handleScroll = () => {
+      const nearBottom =
+        window.scrollY + window.innerHeight >= document.body.scrollHeight - 80;
+
+      if (!nearBottom) return;
+
+      let lastEl: HTMLElement | null = null;
+      sectionsRef.current.forEach((el) => {
+        if (!lastEl || el.offsetTop > lastEl.offsetTop) {
+          lastEl = el;
+        }
+      });
+
+      if (lastEl) {
+        const id = (lastEl as HTMLElement).id;
+        if (id) setActive(id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const refCallback = useCallback((element: HTMLElement | null) => {
     if (!element || sectionsRef.current.has(element)) return;
     sectionsRef.current.add(element);
-    // Observe immediately if the observer is already running
     observerRef.current?.observe(element);
   }, []);
 

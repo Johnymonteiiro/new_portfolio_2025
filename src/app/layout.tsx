@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Saira } from "next/font/google";
 import "./globals.css";
+import { FloatButton } from "@/components/float-button";
 import Header from "@/components/header";
 
 const saira = Saira({
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${saira.className} antialiased`}>
         <Header />
         <main>{children}</main>
+        <FloatButton />
         <footer className="mb-12 mt-32 text-center text-gray">
           <p>© 2024 - All rights reserved</p>
         </footer>

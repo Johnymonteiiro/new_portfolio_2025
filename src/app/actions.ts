@@ -4,7 +4,7 @@ import { EmailTemplate } from "@/components/email.template"; // Certifique-se de
 import { userFormContact } from "@/components/form";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const SendEmail = async ({
   user_name,
