@@ -51,7 +51,7 @@ export const Form = ({ className, isOpen, formRef }: FormProps) => {
         className={clsx(
           className,
           isOpen
-            ? "absolute right-0 top-[48px] z-30 shadow-xl flex flex-col border bg-card-bg border-border-color rounded-md p-8"
+            ? "absolute right-0 z-30 shadow-xl flex flex-col border bg-card-bg border-border-color rounded-md p-8"
             : "hidden"
         )}
       >

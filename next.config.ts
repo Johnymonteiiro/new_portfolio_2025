@@ -6,11 +6,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.prismic.io",
+        hostname: "*.amazonaws.com",
       },
       {
         protocol: "https",
-        hostname: "*.cdn.prismic.io",
+        hostname: "*.notion.so",
+      },
+      {
+        protocol: "https",
+        hostname: "notion.so",
       },
     ],
   },

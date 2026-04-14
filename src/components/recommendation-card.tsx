@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import Image from "next/image";
-import ImageProfile from "../app/assets/jhony.png";
+import { User } from "lucide-react";
 import { LinkedinIcon } from "./ui/icon/linkedin";
+import type { Recommendation } from "@/notion/types/types.notion";
 
 export default function RecommendationCard({
+  rec,
   className,
 }: {
+  rec: Recommendation;
   className?: string;
 }) {
   return (
@@ -17,34 +20,38 @@ export default function RecommendationCard({
     >
       <div className="flex items-center justify-between pb-8">
         <div className="flex">
-          <div className="w-12 h-12 border-2 border-border-color relative overflow-hidden rounded-full">
-            <Image
-              src={ImageProfile}
-              alt="profile-name"
-              fill
-              className="object-cover"
-              quality={100}
-              priority={true}
-            />
+          <div className="w-12 h-12 border-2 border-border-color relative overflow-hidden rounded-full bg-card-bg flex items-center justify-center">
+            {rec.profileImageUrl ? (
+              <Image
+                src={rec.profileImageUrl}
+                alt={rec.name}
+                fill
+                className="object-cover"
+                quality={100}
+              />
+            ) : (
+              <User size={28} className="text-gray" />
+            )}
           </div>
 
           <div className="pl-3">
-            <h2 className="text-lg">Jhon Doe</h2>
-            <p className="text-sm text-gray">Fullstack developer </p>
+            <h2 className="text-lg">{rec.name}</h2>
+            <p className="text-sm text-gray">{rec.jobTitle}</p>
           </div>
         </div>
 
         <div>
-          <LinkedinIcon className="fill-gray hover:fill-white transition-all duration-200 cursor-pointer" />
+          {rec.linkedinUrl ? (
+            <a href={rec.linkedinUrl} target="_blank" rel="noopener noreferrer">
+              <LinkedinIcon className="fill-gray hover:fill-white transition-all duration-200 cursor-pointer" />
+            </a>
+          ) : (
+            <LinkedinIcon className="fill-gray hover:fill-white transition-all duration-200 cursor-pointer" />
+          )}
         </div>
       </div>
 
-      <p className="text-gray">
-        I develop modern websites and software, high performance, clean code and
-        AI integration. My focus is on creating intuitive experiences and
-        solutions that truly make an impact. If you're looking for innovation
-        and results, let’s work together! 🚀
-      </p>
+      <p className="text-gray">{rec.recommendationText}</p>
     </div>
   );
 }
