@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx"],
   images: {
+    qualities: [75, 100],
     remotePatterns: [
       {
         protocol: "https",

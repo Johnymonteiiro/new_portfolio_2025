@@ -1,8 +1,10 @@
+import type { RichTextSegment } from "@/notion/types/types.notion";
+
 const PROSE_WPM = 200;
 const CODE_TOKENS_PER_MIN = 200;
 
 interface ContentBlock {
-  text: string;
+  text: RichTextSegment[];
   code?: string | null;
 }
 
@@ -11,8 +13,9 @@ export function calculateReadingTime(content: ContentBlock[]): number {
   let codeTokens = 0;
 
   for (const block of content) {
-    if (block.text.trim()) {
-      proseWords += block.text.trim().split(/\s+/).length;
+    const plainText = block.text.map((s) => s.content).join(" ").trim();
+    if (plainText) {
+      proseWords += plainText.split(/\s+/).length;
     }
 
     if (block.code?.trim()) {

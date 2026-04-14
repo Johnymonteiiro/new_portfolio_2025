@@ -9,27 +9,32 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const LANG_META: Record<string, { label: string; color: string }> = {
   javascript: { label: "JavaScript", color: "#f7df1e" },
-  jsx:        { label: "JSX",        color: "#f7df1e" },
+  jsx: { label: "JSX", color: "#f7df1e" },
   typescript: { label: "TypeScript", color: "#3178c6" },
-  tsx:        { label: "TSX",        color: "#3178c6" },
-  python:     { label: "Python",     color: "#3572a5" },
-  bash:       { label: "Bash",       color: "#02c096" },
-  shell:      { label: "Shell",      color: "#02c096" },
-  sh:         { label: "Shell",      color: "#02c096" },
-  css:        { label: "CSS",        color: "#7e5bef" },
-  scss:       { label: "SCSS",       color: "#c6538c" },
-  html:       { label: "HTML",       color: "#e34f26" },
-  json:       { label: "JSON",       color: "#939496" },
-  sql:        { label: "SQL",        color: "#7e5bef" },
-  rust:       { label: "Rust",       color: "#dea584" },
-  go:         { label: "Go",         color: "#00add8" },
-  yaml:       { label: "YAML",       color: "#cb171e" },
-  markdown:   { label: "Markdown",   color: "#939496" },
-  none:       { label: "Code",       color: "#939496" },
+  tsx: { label: "TSX", color: "#3178c6" },
+  python: { label: "Python", color: "#3572a5" },
+  bash: { label: "Bash", color: "#02c096" },
+  shell: { label: "Shell", color: "#02c096" },
+  sh: { label: "Shell", color: "#02c096" },
+  css: { label: "CSS", color: "#7e5bef" },
+  scss: { label: "SCSS", color: "#c6538c" },
+  html: { label: "HTML", color: "#e34f26" },
+  json: { label: "JSON", color: "#939496" },
+  sql: { label: "SQL", color: "#7e5bef" },
+  rust: { label: "Rust", color: "#dea584" },
+  go: { label: "Go", color: "#00add8" },
+  yaml: { label: "YAML", color: "#cb171e" },
+  markdown: { label: "Markdown", color: "#939496" },
+  none: { label: "Code", color: "#939496" },
 };
 
 function getLangMeta(lang: string) {
-  return LANG_META[lang.toLowerCase()] ?? { label: lang.toUpperCase(), color: "#939496" };
+  return (
+    LANG_META[lang.toLowerCase()] ?? {
+      label: lang.toUpperCase(),
+      color: "#939496",
+    }
+  );
 }
 
 // ─── Theme override — keep vscDarkPlus tokens but match portfolio background ──
@@ -42,7 +47,7 @@ const portfolioTheme = {
     margin: 0,
     padding: "1.25rem 1rem",
     borderRadius: 0,
-    fontSize: "0.8125rem",       // 13px — standard for code
+    fontSize: "0.8125rem", // 13px — standard for code
     lineHeight: "1.75",
     overflowX: "auto",
   },
@@ -114,7 +119,7 @@ export function CodeBlock({ code, language }: Props) {
       {/* Code */}
       <SyntaxHighlighter
         language={language || "text"}
-        style={portfolioTheme}
+        style={portfolioTheme as any}
         PreTag="div"
         showLineNumbers
         wrapLines={false}

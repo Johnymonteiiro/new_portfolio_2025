@@ -28,6 +28,7 @@ export default function RecommendationCard({
                 fill
                 className="object-cover"
                 quality={100}
+                unoptimized
               />
             ) : (
               <User size={28} className="text-gray" />

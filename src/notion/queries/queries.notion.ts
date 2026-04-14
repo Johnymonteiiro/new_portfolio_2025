@@ -26,6 +26,7 @@ import type {
   Profile,
   Project,
   Recommendation,
+  RichTextSegment,
   Service,
   SidebarItem,
 } from "../types/types.notion";
@@ -52,18 +53,29 @@ const DB = {
  */
 async function parseSectionBlocks(
   pageId: string
-): Promise<{ text: string; code: string | null }> {
+): Promise<{ text: RichTextSegment[]; code: string | null }> {
   const { results } = await notion.blocks.children.list({ block_id: pageId });
 
-  const textParts: string[] = [];
+  const allSegments: RichTextSegment[] = [];
   let code: string | null = null;
 
   for (const block of results as BlockObjectResponse[]) {
     if (block.type === "paragraph") {
-      const plain = block.paragraph.rich_text
-        .map((t) => t.plain_text)
-        .join("");
-      if (plain) textParts.push(plain);
+      const segments = block.paragraph.rich_text
+        .filter((t) => t.plain_text)
+        .map((t) => ({
+          content: t.plain_text,
+          code:    t.annotations.code,
+          bold:    t.annotations.bold,
+          italic:  t.annotations.italic,
+        }));
+
+      if (segments.length > 0) {
+        if (allSegments.length > 0) {
+          allSegments.push({ content: "\n", code: false, bold: false, italic: false });
+        }
+        allSegments.push(...segments);
+      }
     }
 
     if (block.type === "code") {
@@ -71,7 +83,7 @@ async function parseSectionBlocks(
     }
   }
 
-  return { text: textParts.join("\n"), code };
+  return { text: allSegments, code };
 }
 
 // ─── Blog Posts ───────────────────────────────────────────────────────────────
