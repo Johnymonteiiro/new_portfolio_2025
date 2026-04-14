@@ -2,8 +2,17 @@
 
 import Sidebar from "@/components/sidebar";
 import { useActiveLink } from "@/hooks/useActive";
-import type { BlogPostSummary } from "@/types/prismic";
 import { CodeBlock } from "./code";
+
+import type { BlogTag } from "@/notion/types/types.notion";
+
+type BlogPostSummary = {
+  title: string;
+  slug: string;
+  description: string;
+  publishedDate: string | null;
+  tags: BlogTag[];
+};
 
 interface BlogContentProps {
   content: {

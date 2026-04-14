@@ -1,11 +1,21 @@
 "use client";
 
 import { useClickOutside } from "@/hooks/clickOutSide";
-import type { BlogPostSummary } from "@/types/prismic";
+
+import type { BlogTag } from "@/notion/types/types.notion";
+
+type BlogPostSummary = {
+  title: string;
+  slug: string;
+  description: string;
+  publishedDate: string | null;
+  tags: BlogTag[];
+};
 import clsx from "clsx";
 import { LayoutGrid, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { TagBadges } from "./tag-badges";
 
 interface AllPostsModalProps {
   isOpen: boolean;
@@ -80,14 +90,17 @@ export function AllPostsModal({
               <div className="flex items-center justify-between mb-2">
                 <span className="text-white text-lg">{post.title}</span>
                 <span className="text-green text-lg shrink-0 ml-2">
-                  {post.data.toLocaleDateString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })}
+                  {post.publishedDate
+                    ? new Date(post.publishedDate + "T00:00:00").toLocaleDateString("pt-BR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })
+                    : "—"}
                 </span>
               </div>
-              <p className="text-gray text-lg">{post.description}</p>
+              <p className="text-gray text-lg line-clamp-2">{post.description}</p>
+              <TagBadges tags={post.tags} className="mt-3" />
             </Link>
           </li>
         ))}

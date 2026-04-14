@@ -1,7 +1,16 @@
 "use client";
 
-import type { BlogPostSummary } from "@/types/prismic";
 import clsx from "clsx";
+
+import type { BlogTag } from "@/notion/types/types.notion";
+
+type BlogPostSummary = {
+  title: string;
+  slug: string;
+  description: string;
+  publishedDate: string | null;
+  tags: BlogTag[];
+};
 import { LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 import { AllPostsModal } from "./all-posts-modal";

@@ -1,12 +1,15 @@
 "use client";
 
+import { TagBadges } from "@/components/tag-badges";
 import { CalendarIcon } from "@/components/ui/icon/calendar";
 import { calculateReadingTime } from "@/lib/reading-time";
+import type { BlogTag } from "@/notion/types/types.notion";
 import { Clock1, MoveLeft } from "lucide-react";
 
 interface BlogContentProps {
   date?: Date;
   section_title?: string;
+  tags?: BlogTag[];
   content?: {
     sub_title: string;
     text: string;
@@ -19,6 +22,7 @@ export function HeaderSection({
   content,
   date,
   section_title,
+  tags = [],
 }: BlogContentProps) {
   const formated_date = date?.toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -38,19 +42,23 @@ export function HeaderSection({
         Home
       </a>
 
-      <div className="py-10 px-6 mt-5 bg-card-bg rounded-md flex items-center justify-between">
-        <h1 className="text-2xl">{section_title}</h1>
+      <div className="py-10 px-6 mt-5 bg-card-bg rounded-md">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl">{section_title}</h1>
 
-        <div className="flex items-center">
-          <li className="flex items-center">
-            <CalendarIcon size={18} className="stroke-green" />
-            <p className="ml-2">{formated_date}</p>
-          </li>
-          <li className="flex items-center ml-5">
-            <Clock1 size={18} className="text-green" />
-            <p className="ml-2">{readingTime + " min"}</p>
-          </li>
+          <div className="flex items-center">
+            <li className="flex items-center">
+              <CalendarIcon size={18} className="stroke-green" />
+              <p className="ml-2">{formated_date}</p>
+            </li>
+            <li className="flex items-center ml-5">
+              <Clock1 size={18} className="text-green" />
+              <p className="ml-2">{readingTime + " min"}</p>
+            </li>
+          </div>
         </div>
+
+        <TagBadges tags={tags} className="mt-4" />
       </div>
     </section>
   );
