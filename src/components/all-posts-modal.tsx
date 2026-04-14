@@ -1,20 +1,12 @@
 "use client";
 
 import { useClickOutside } from "@/hooks/clickOutSide";
-
-import type { BlogTag } from "@/notion/types/types.notion";
-
-type BlogPostSummary = {
-  title: string;
-  slug: string;
-  description: string;
-  publishedDate: string | null;
-  tags: BlogTag[];
-};
+import type { BlogPostSummary } from "@/types/blog";
+import { formatDate } from "@/lib/format-date";
 import clsx from "clsx";
 import { LayoutGrid, X } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TagBadges } from "./tag-badges";
 
 interface AllPostsModalProps {
@@ -32,6 +24,15 @@ export function AllPostsModal({
   const modalRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(modalRef, onClose);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [isOpen, onClose]);
 
   const filtered = allPosts.filter((p) =>
     p.title.toLowerCase().includes(search.toLowerCase()),
@@ -90,13 +91,7 @@ export function AllPostsModal({
               <div className="flex items-center justify-between mb-2">
                 <span className="text-white text-lg">{post.title}</span>
                 <span className="text-green text-lg shrink-0 ml-2">
-                  {post.publishedDate
-                    ? new Date(post.publishedDate + "T00:00:00").toLocaleDateString("pt-BR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })
-                    : "—"}
+                  {formatDate(post.publishedDate)}
                 </span>
               </div>
               <p className="text-gray text-lg line-clamp-2">{post.description}</p>

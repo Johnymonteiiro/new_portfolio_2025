@@ -4,6 +4,7 @@ import {
 } from "@/notion/queries/queries.notion";
 import { AUTHOR, SITE_URL } from "@/config/seo";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { BlogContent } from "../blog.content";
 import { HeaderSection } from "../header-section";
 
@@ -55,7 +56,9 @@ export default async function Page({
     getBlogPosts(),
   ]);
 
-  const content = post?.content.map((s) => ({
+  if (!post) notFound();
+
+  const content = post.content.map((s) => ({
     sub_title: s.subTitle,
     text: s.text,
     language: s.language,
@@ -70,43 +73,39 @@ export default async function Page({
     tags: p.tags,
   }));
 
-  const jsonLd = post
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: post.title,
-        description: post.description,
-        datePublished: post.publishedDate ?? undefined,
-        author: {
-          "@type": "Person",
-          name: AUTHOR.name,
-          url: SITE_URL,
-        },
-        publisher: {
-          "@type": "Person",
-          name: AUTHOR.name,
-          url: SITE_URL,
-        },
-        url: `${SITE_URL}/blog/${slug}`,
-        keywords: post.tags.join(", "),
-      }
-    : null;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.publishedDate ?? undefined,
+    author: {
+      "@type": "Person",
+      name: AUTHOR.name,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      name: AUTHOR.name,
+      url: SITE_URL,
+    },
+    url: `${SITE_URL}/blog/${slug}`,
+    keywords: post.tags.join(", "),
+  };
 
   return (
     <main className="w-full max-w-[1200px] mx-auto px-4 mt-10">
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
-      <HeaderSection
-        date={post?.publishedDate ? new Date(post.publishedDate + "T00:00:00") : undefined}
-        content={content}
-        section_title={post?.title}
-        tags={post?.tags}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogContent content={content || []} allPosts={allPostsSummary} />
+      <HeaderSection
+        date={post.publishedDate ? new Date(post.publishedDate + "T00:00:00") : undefined}
+        content={content}
+        section_title={post.title}
+        tags={post.tags}
+      />
+      <BlogContent content={content} allPosts={allPostsSummary} />
     </main>
   );
 }

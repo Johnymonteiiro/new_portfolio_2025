@@ -2,6 +2,7 @@ import type {
   BlockObjectResponse,
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import { cache } from "react";
 
 import { notion } from "../client/notion.client";
 import {
@@ -89,7 +90,7 @@ function mapBlogPost(page: PageObjectResponse): BlogPost {
 }
 
 /** Returns all published blog posts, ordered by Published Date descending */
-export async function getBlogPosts(): Promise<BlogPost[]> {
+export const getBlogPosts = cache(async function getBlogPosts(): Promise<BlogPost[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.BLOG_POSTS,
     filter: {
@@ -100,7 +101,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   });
 
   return (results as PageObjectResponse[]).map(mapBlogPost);
-}
+});
 
 // ─── Blog Content Sections ────────────────────────────────────────────────────
 
@@ -124,7 +125,7 @@ async function mapBlogSection(
 }
 
 /** Returns all sections for a given post ID, sorted by Order */
-export async function getSectionsByPostId(
+export const getSectionsByPostId = cache(async function getSectionsByPostId(
   postId: string
 ): Promise<BlogContentSection[]> {
   const { results } = await notion.dataSources.query({
@@ -141,12 +142,12 @@ export async function getSectionsByPostId(
   );
 
   return sections;
-}
+});
 
 // ─── Blog Post + Content (full page) ─────────────────────────────────────────
 
 /** Fetches a single post by slug with all its sections — use in [slug]/page.tsx */
-export async function getBlogPostBySlug(
+export const getBlogPostBySlug = cache(async function getBlogPostBySlug(
   slug: string
 ): Promise<BlogPostWithContent | null> {
   const { results } = await notion.dataSources.query({
@@ -163,7 +164,7 @@ export async function getBlogPostBySlug(
   const content = await getSectionsByPostId(post.id);
 
   return { ...post, content };
-}
+});
 
 /** Fetches all published posts, each with their full content sections */
 export async function getAllBlogPostsWithContent(): Promise<BlogPostWithContent[]> {
@@ -193,7 +194,7 @@ function mapProject(page: PageObjectResponse): Project {
   };
 }
 
-export async function getProjects(): Promise<Project[]> {
+export const getProjects = cache(async function getProjects(): Promise<Project[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.PROJECTS,
     filter: {
@@ -203,7 +204,7 @@ export async function getProjects(): Promise<Project[]> {
   });
 
   return (results as PageObjectResponse[]).map(mapProject);
-}
+});
 
 // ─── Services ─────────────────────────────────────────────────────────────────
 
@@ -218,7 +219,7 @@ function mapService(page: PageObjectResponse): Service {
   };
 }
 
-export async function getServices(): Promise<Service[]> {
+export const getServices = cache(async function getServices(): Promise<Service[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.SERVICES,
     filter: {
@@ -229,7 +230,7 @@ export async function getServices(): Promise<Service[]> {
   });
 
   return (results as PageObjectResponse[]).map(mapService);
-}
+});
 
 // ─── Sidebar Navigation ───────────────────────────────────────────────────────
 
@@ -244,7 +245,7 @@ function mapSidebarItem(page: PageObjectResponse): SidebarItem {
   };
 }
 
-export async function getSidebarItems(): Promise<SidebarItem[]> {
+export const getSidebarItems = cache(async function getSidebarItems(): Promise<SidebarItem[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.SIDEBAR,
     filter: {
@@ -255,7 +256,7 @@ export async function getSidebarItems(): Promise<SidebarItem[]> {
   });
 
   return (results as PageObjectResponse[]).map(mapSidebarItem);
-}
+});
 
 // ─── Profile ──────────────────────────────────────────────────────────────────
 
@@ -278,14 +279,14 @@ function mapProfile(page: PageObjectResponse): Profile {
   };
 }
 
-export async function getProfile(): Promise<Profile | null> {
+export const getProfile = cache(async function getProfile(): Promise<Profile | null> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.PROFILE,
   });
 
   if (!results.length) return null;
   return mapProfile(results[0] as PageObjectResponse);
-}
+});
 
 // ─── Interest Areas ───────────────────────────────────────────────────────────
 
@@ -299,14 +300,14 @@ function mapInterestArea(page: PageObjectResponse): InterestArea {
   };
 }
 
-export async function getInterestAreas(): Promise<InterestArea[]> {
+export const getInterestAreas = cache(async function getInterestAreas(): Promise<InterestArea[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.INTEREST_AREAS,
     sorts: [{ property: "Order", direction: "ascending" }],
   });
 
   return (results as PageObjectResponse[]).map(mapInterestArea);
-}
+});
 
 // ─── Journey ──────────────────────────────────────────────────────────────────
 
@@ -325,7 +326,7 @@ async function getResponsibilitiesForEntry(entryId: string): Promise<string[]> {
   );
 }
 
-export async function getJourneyEntries(): Promise<JourneyEntry[]> {
+export const getJourneyEntries = cache(async function getJourneyEntries(): Promise<JourneyEntry[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.JOURNEY,
     sorts: [{ property: "Order", direction: "ascending" }],
@@ -349,7 +350,7 @@ export async function getJourneyEntries(): Promise<JourneyEntry[]> {
   );
 
   return entries;
-}
+});
 
 // ─── Recommendations ─────────────────────────────────────────────────────────
 
@@ -367,11 +368,11 @@ function mapRecommendation(page: PageObjectResponse): Recommendation {
   };
 }
 
-export async function getRecommendations(): Promise<Recommendation[]> {
+export const getRecommendations = cache(async function getRecommendations(): Promise<Recommendation[]> {
   const { results } = await notion.dataSources.query({
     data_source_id: DB.RECOMMENDATIONS,
     sorts: [{ property: "Order", direction: "ascending" }],
   });
 
   return (results as PageObjectResponse[]).map(mapRecommendation);
-}
+});

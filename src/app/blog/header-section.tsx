@@ -2,6 +2,7 @@
 
 import { TagBadges } from "@/components/tag-badges";
 import { CalendarIcon } from "@/components/ui/icon/calendar";
+import { formatDate } from "@/lib/format-date";
 import { calculateReadingTime } from "@/lib/reading-time";
 import type { BlogTag } from "@/notion/types/types.notion";
 import { Clock1, MoveLeft } from "lucide-react";
@@ -24,11 +25,7 @@ export function HeaderSection({
   section_title,
   tags = [],
 }: BlogContentProps) {
-  const formated_date = date?.toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  const formated_date = formatDate(date);
 
   const readingTime = content ? calculateReadingTime(content) : 1;
 
@@ -47,14 +44,14 @@ export function HeaderSection({
           <h1 className="text-2xl">{section_title}</h1>
 
           <div className="flex items-center">
-            <li className="flex items-center">
+            <div className="flex items-center">
               <CalendarIcon size={18} className="stroke-green" />
               <p className="ml-2">{formated_date}</p>
-            </li>
-            <li className="flex items-center ml-5">
+            </div>
+            <div className="flex items-center ml-5">
               <Clock1 size={18} className="text-green" />
               <p className="ml-2">{readingTime + " min"}</p>
-            </li>
+            </div>
           </div>
         </div>
 

@@ -1,10 +1,11 @@
 import type { BlogTag } from "@/notion/types/types.notion";
+import { formatDate } from "@/lib/format-date";
 import Link from "next/link";
 import { TagBadges } from "./tag-badges";
 import { BookIcon } from "./ui/icon/book";
 
 interface BlogCardProps {
-  date: Date;
+  date: Date | string | null;
   description: string;
   slug: string;
   section_title: string;
@@ -18,11 +19,7 @@ export default function BlogCard({
   section_title,
   tags = [],
 }: BlogCardProps) {
-  const formated_date = date.toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  const formated_date = formatDate(date instanceof Date ? date : date);
 
   return (
     <div className="border rounded-md border-border-color p-5 w-full mb-6 transition-all duration-200 cursor-pointer hover:border-green">

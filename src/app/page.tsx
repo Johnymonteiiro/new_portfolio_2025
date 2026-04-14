@@ -1,4 +1,5 @@
 import HomeContent from "@/components/home-content";
+import { DESCRIPTION, SITE_URL } from "@/config/seo";
 import {
   getBlogPosts,
   getInterestAreas,
@@ -9,7 +10,6 @@ import {
   getServices,
   getSidebarItems,
 } from "@/notion/queries/queries.notion";
-import { DESCRIPTION, SITE_URL } from "@/config/seo";
 import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -35,30 +35,47 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [posts, projects, services, sidebarItems, profile, interests, journey, recommendations] =
-    await Promise.all([
-      getBlogPosts(),
-      getProjects(),
-      getServices(),
-      getSidebarItems(),
-      getProfile(),
-      getInterestAreas(),
-      getJourneyEntries(),
-      getRecommendations(),
-    ]);
+  const [
+    posts,
+    projects,
+    services,
+    sidebarItems,
+    profile,
+    interests,
+    journey,
+    recommendations,
+  ] = await Promise.all([
+    getBlogPosts(),
+    getProjects(),
+    getServices(),
+    getSidebarItems(),
+    getProfile(),
+    getInterestAreas(),
+    getJourneyEntries(),
+    getRecommendations(),
+  ]);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: profile?.name ?? "João José Sebastião",
+    name: profile?.name ?? "Jhony Monteiiro",
     jobTitle: profile?.title ?? "Software Engineer",
     url: SITE_URL,
     description: profile?.bio,
     sameAs: [profile?.linkedinUrl, profile?.githubUrl].filter(Boolean),
     knowsAbout: [
-      "Next.js", "React", "Node.js", "NestJS", "TypeScript", "Python",
-      "PostgreSQL", "Inteligência Artificial", "Agentes de IA", "LangChain",
-      "UI Design", "Fullstack Development",
+      "Next.js",
+      "React",
+      "Node.js",
+      "NestJS",
+      "TypeScript",
+      "Python",
+      "PostgreSQL",
+      "Inteligência Artificial",
+      "Agentes de IA",
+      "LangChain",
+      "UI Design",
+      "Fullstack Development",
     ],
   };
 

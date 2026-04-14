@@ -4,11 +4,17 @@ import type { Metadata } from "next";
 import { FloatButton } from "@/components/float-button";
 import Header from "@/components/header";
 import { AUTHOR, DESCRIPTION, KEYWORDS, SITE_NAME, SITE_URL } from "@/config/seo";
-import { Saira } from "next/font/google";
+import { JetBrains_Mono, Saira } from "next/font/google";
 
 const saira = Saira({
   subsets: ["latin"],
   display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -54,12 +60,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true} className="scroll-smooth">
-      <body className={`${saira.className} antialiased`}>
+      <body className={`${saira.className} ${jetbrainsMono.variable} antialiased`}>
         <Header />
         <main>{children}</main>
         <FloatButton />
         <footer className="mb-12 mt-32 text-center text-gray">
-          <p>© 2024 - All rights reserved</p>
+          <p>© {new Date().getFullYear()} - All rights reserved</p>
         </footer>
       </body>
     </html>

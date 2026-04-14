@@ -2,15 +2,7 @@
 
 import clsx from "clsx";
 
-import type { BlogTag } from "@/notion/types/types.notion";
-
-type BlogPostSummary = {
-  title: string;
-  slug: string;
-  description: string;
-  publishedDate: string | null;
-  tags: BlogTag[];
-};
+import type { BlogPostSummary } from "@/types/blog";
 import { LayoutGrid, List } from "lucide-react";
 import { useState } from "react";
 import { AllPostsModal } from "./all-posts-modal";
@@ -35,7 +27,7 @@ export default function Sidebar({
   return (
     <>
       <aside
-        className={clsx(className, "relative flex-1 flex justify-end pl-4")}
+        className={clsx(className, "relative shrink-0 flex justify-end pl-4")}
       >
         <div className="sticky top-4 self-start w-52 border-l-2 bg-black/10 backdrop-blur-2xl z-10 border-border-color pl-3">
           <div className="flex items-center space-x-2 mb-4">

@@ -11,6 +11,7 @@ import { IAcon } from "./ui/icon/ia";
 import { InnovationIcon } from "./ui/icon/innovation";
 import { LinkedinIcon } from "./ui/icon/linkedin";
 import { SaasIcon } from "./ui/icon/saas";
+import { SECTIONS } from "@/config/sections";
 import type { InterestArea, Profile } from "@/notion/types/types.notion";
 import { type ReactNode } from "react";
 
@@ -36,7 +37,7 @@ export default function Profile({
   interests: InterestArea[];
 }) {
   return (
-    <div id="About" ref={refCallback}>
+    <div id={SECTIONS.ABOUT} ref={refCallback}>
       <div className="bg-card-bg flex shadow-normal rounded-md relative mt-20 p-6">
         <div>
           <Image
@@ -44,7 +45,7 @@ export default function Profile({
             width={134}
             height={134}
             quality={100}
-            alt="logo-image"
+            alt={profile.name || "Profile photo"}
             className="rounded-md border-4 border-border-color"
           />
 
@@ -64,7 +65,7 @@ export default function Profile({
             <div className="flex items-center gap-3">
               <Tooltip label="LinkedIn">
                 {profile.linkedinUrl ? (
-                  <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
                     <LinkedinIcon className="fill-gray hover:fill-white transition-all duration-200 cursor-pointer" />
                   </a>
                 ) : (
@@ -73,7 +74,7 @@ export default function Profile({
               </Tooltip>
               <Tooltip label="GitHub">
                 {profile.githubUrl ? (
-                  <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
                     <GithubIcon className="fill-gray hover:fill-white transition-all duration-200 cursor-pointer" />
                   </a>
                 ) : (
@@ -82,7 +83,7 @@ export default function Profile({
               </Tooltip>
               <Tooltip label="Curriculum">
                 {(profile.cvFileUrl ?? profile.cvUrl) ? (
-                  <a href={(profile.cvFileUrl ?? profile.cvUrl)!} target="_blank" rel="noopener noreferrer">
+                  <a href={(profile.cvFileUrl ?? profile.cvUrl)!} target="_blank" rel="noopener noreferrer" aria-label="Download curriculum">
                     <FileIcon className="stroke-gray hover:stroke-white transition-all duration-200 cursor-pointer" />
                   </a>
                 ) : (

@@ -4,15 +4,7 @@ import Sidebar from "@/components/sidebar";
 import { useActiveLink } from "@/hooks/useActive";
 import { CodeBlock } from "./code";
 
-import type { BlogTag } from "@/notion/types/types.notion";
-
-type BlogPostSummary = {
-  title: string;
-  slug: string;
-  description: string;
-  publishedDate: string | null;
-  tags: BlogTag[];
-};
+import type { BlogPostSummary } from "@/types/blog";
 
 interface BlogContentProps {
   content: {
@@ -28,9 +20,9 @@ export function BlogContent({ content, allPosts }: BlogContentProps) {
   const [refCallback, active] = useActiveLink(content?.[0]?.sub_title ?? "");
   return (
     <section className="mt-16 flex relative">
-      <div>
+      <div className="flex-1 min-w-0">
         {content?.map((content, index) => (
-          <div className="max-w-[900px]" key={index}>
+          <div className="max-w-[900px] w-full" key={index}>
             <h2 className="text-xl" id={content.sub_title} ref={refCallback}>
               {content.sub_title}
             </h2>
