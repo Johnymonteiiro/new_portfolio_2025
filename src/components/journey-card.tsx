@@ -1,7 +1,6 @@
-import { SquareArrowOutUpRight, SquareCheckBig } from "lucide-react";
-import React from "react";
-import { FlagIcon } from "./ui/icon/flag";
 import type { JourneyEntry } from "@/notion/types/types.notion";
+import { SquareArrowOutUpRight, SquareCheckBig } from "lucide-react";
+import { FlagIcon } from "./ui/icon/flag";
 
 export default function JourneyCard({ entry }: { entry: JourneyEntry }) {
   return (
@@ -11,17 +10,21 @@ export default function JourneyCard({ entry }: { entry: JourneyEntry }) {
           <FlagIcon className="stroke-purple" />
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
+          <a
+            className="flex items-center"
+            href={entry.companyUrl ?? ""}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <h2 className="text-xl pr-2">{entry.company}</h2>
-            <a href={entry.companyUrl ?? ""} target="_blank" rel="noopener noreferrer">
-              <SquareArrowOutUpRight
-                className="hover:stroke-gray transition-all duration-200 cursor-pointer"
-                size={18}
-              />
-            </a>
-          </div>
+            <p>
+              <SquareArrowOutUpRight className="" size={18} />
+            </p>
+          </a>
 
-          <p className="text-gray">{entry.dateStart}-{entry.dateEnd}</p>
+          <p className="text-gray">
+            {entry.dateStart}-{entry.dateEnd}
+          </p>
         </div>
 
         <div className="my-5">
