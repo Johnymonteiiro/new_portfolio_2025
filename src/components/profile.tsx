@@ -45,6 +45,7 @@ export default function Profile({
             width={134}
             height={134}
             quality={100}
+            unoptimized={!!profile.profileImageUrl}
             alt={profile.name || "Profile photo"}
             className="rounded-md border-4 border-border-color"
           />

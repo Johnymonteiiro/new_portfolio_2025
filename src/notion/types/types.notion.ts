@@ -1,3 +1,12 @@
+// ─── Rich Text ───────────────────────────────────────────────────────────────
+
+export interface RichTextSegment {
+  content: string;
+  code: boolean;
+  bold: boolean;
+  italic: boolean;
+}
+
 // ─── Blog ────────────────────────────────────────────────────────────────────
 
 export type BlogTag =
@@ -31,8 +40,8 @@ export interface BlogContentSection {
   order: number;
   /** postId of the related Blog Post */
   postId: string;
-  /** Parsed from page body blocks */
-  text: string;
+  /** Parsed from page body blocks — preserves inline annotations (code, bold, italic) */
+  text: RichTextSegment[];
   code: string | null;
 }
 

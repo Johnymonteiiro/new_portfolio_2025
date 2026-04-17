@@ -4,7 +4,7 @@ import { TagBadges } from "@/components/tag-badges";
 import { CalendarIcon } from "@/components/ui/icon/calendar";
 import { formatDate } from "@/lib/format-date";
 import { calculateReadingTime } from "@/lib/reading-time";
-import type { BlogTag } from "@/notion/types/types.notion";
+import type { BlogTag, RichTextSegment } from "@/notion/types/types.notion";
 import { Clock1, MoveLeft } from "lucide-react";
 
 interface BlogContentProps {
@@ -13,7 +13,7 @@ interface BlogContentProps {
   tags?: BlogTag[];
   content?: {
     sub_title: string;
-    text: string;
+    text: RichTextSegment[];
     language: string;
     code: string | null;
   }[];
