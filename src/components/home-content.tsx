@@ -19,7 +19,7 @@ import type {
   Recommendation,
   Service,
   SidebarItem,
-} from "@/notion/types/types.notion";
+} from "@/sanity/lib/types";
 import { SECTIONS } from "@/config/sections";
 import { type ReactNode, useMemo } from "react";
 

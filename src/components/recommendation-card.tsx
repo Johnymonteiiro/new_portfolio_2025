@@ -2,7 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { User } from "lucide-react";
 import { LinkedinIcon } from "./ui/icon/linkedin";
-import type { Recommendation } from "@/notion/types/types.notion";
+import type { Recommendation } from "@/sanity/lib/types";
 
 export default function RecommendationCard({
   rec,
@@ -28,7 +28,6 @@ export default function RecommendationCard({
                 fill
                 className="object-cover"
                 quality={100}
-                unoptimized
               />
             ) : (
               <User size={28} className="text-gray" />

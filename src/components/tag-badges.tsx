@@ -1,4 +1,4 @@
-import type { BlogTag } from "@/notion/types/types.notion";
+import type { BlogTag } from "@/sanity/lib/types";
 
 const TAG_STYLES: Record<BlogTag, string> = {
   "Next.js":  "bg-green-flat text-green",

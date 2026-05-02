@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { FloatButton } from "@/components/float-button";
 import Header from "@/components/header";
 import { AUTHOR, DESCRIPTION, KEYWORDS, SITE_NAME, SITE_URL } from "@/config/seo";
+import { SanityLive } from "@/sanity/lib/live";
 import { JetBrains_Mono, Saira } from "next/font/google";
 
 const saira = Saira({
@@ -67,6 +68,7 @@ export default function RootLayout({
         <footer className="mb-12 mt-32 text-center text-gray">
           <p>© {new Date().getFullYear()} - All rights reserved</p>
         </footer>
+        <SanityLive />
       </body>
     </html>
   );

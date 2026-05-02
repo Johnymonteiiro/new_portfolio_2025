@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 interface ServiceProps {
   className?: string;
@@ -10,18 +10,17 @@ interface ServiceProps {
   title: string;
 }
 
-export default function InterestCircle({
+export default function InterestAreas({
   description,
   icon,
   title,
   className,
-  ...rest
 }: ServiceProps) {
   return (
     <div
       className={clsx(
         className,
-        "w-64 h-64 p-4 rounded-full cursor-default flex items-center transition-all duration-300"
+        "w-64 h-auto p-4 rounded cursor-default flex items-center transition-all duration-300",
       )}
     >
       <div className="flex flex-col items-center justify-center">

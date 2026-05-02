@@ -12,7 +12,7 @@ import { TextArea } from "./ui/textarea";
 export type FormProps = {
   className?: string;
   isOpen: boolean;
-  formRef: React.RefObject<HTMLFormElement>;
+  formRef: React.RefObject<HTMLFormElement | null>;
 };
 
 const userFormSchema = z.object({
