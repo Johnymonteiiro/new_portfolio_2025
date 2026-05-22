@@ -1,11 +1,22 @@
-import type { RichTextSegment } from "@/notion/types/types.notion";
+import type { PortableTextBlock } from "@portabletext/react";
 
 const PROSE_WPM = 200;
 const CODE_TOKENS_PER_MIN = 200;
 
 interface ContentBlock {
-  text: RichTextSegment[];
+  body: PortableTextBlock[];
   code?: string | null;
+}
+
+function blocksToPlainText(blocks: PortableTextBlock[]): string {
+  return blocks
+    .map((block) => {
+      if (block._type !== "block") return "";
+      const children = (block as { children?: { text?: string }[] }).children ?? [];
+      return children.map((c) => c.text ?? "").join("");
+    })
+    .join(" ")
+    .trim();
 }
 
 export function calculateReadingTime(content: ContentBlock[]): number {
@@ -13,7 +24,7 @@ export function calculateReadingTime(content: ContentBlock[]): number {
   let codeTokens = 0;
 
   for (const block of content) {
-    const plainText = block.text.map((s) => s.content).join(" ").trim();
+    const plainText = blocksToPlainText(block.body);
     if (plainText) {
       proseWords += plainText.split(/\s+/).length;
     }

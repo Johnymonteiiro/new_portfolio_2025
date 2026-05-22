@@ -1,5 +1,5 @@
 import { SITE_URL } from "@/config/seo";
-import { getBlogPosts } from "@/notion/queries/queries.notion";
+import { getBlogPosts } from "@/sanity/lib/queries";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

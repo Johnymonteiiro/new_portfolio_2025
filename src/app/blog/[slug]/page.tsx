@@ -1,7 +1,8 @@
 import {
   getBlogPostBySlug,
+  getBlogPostSlugs,
   getBlogPosts,
-} from "@/notion/queries/queries.notion";
+} from "@/sanity/lib/queries";
 import { AUTHOR, SITE_URL } from "@/config/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -9,8 +10,8 @@ import { BlogContent } from "../blog.content";
 import { HeaderSection } from "../header-section";
 
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  return posts.map((p) => ({ slug: p.slug }));
+  const slugs = await getBlogPostSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -60,7 +61,7 @@ export default async function Page({
 
   const content = post.content.map((s) => ({
     sub_title: s.subTitle,
-    text: s.text,
+    body: s.body,
     language: s.language,
     code: s.code,
   }));

@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 type EventType = MouseEvent | TouchEvent | KeyboardEvent;
 
 export function useClickOutside<T extends HTMLElement = HTMLElement>(
-  ref: React.RefObject<T>,
+  ref: React.RefObject<T | null>,
   callback: (event: EventType) => void,
-  nodesToIgnore?: React.RefObject<HTMLElement>[]
+  nodesToIgnore?: React.RefObject<HTMLElement | null>[]
 ) {
   const savedCallback = useRef(callback);
 

@@ -1,4 +1,4 @@
-import type { BlogTag } from "@/notion/types/types.notion";
+import type { BlogTag } from "@/sanity/lib/types";
 
 export type BlogPostSummary = {
   title: string;

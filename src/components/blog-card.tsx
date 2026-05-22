@@ -1,4 +1,4 @@
-import type { BlogTag } from "@/notion/types/types.notion";
+import type { BlogTag } from "@/sanity/lib/types";
 import { formatDate } from "@/lib/format-date";
 import Link from "next/link";
 import { TagBadges } from "./tag-badges";

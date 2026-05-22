@@ -1,4 +1,4 @@
-import type { JourneyEntry } from "@/notion/types/types.notion";
+import type { JourneyEntry } from "@/sanity/lib/types";
 import { SquareArrowOutUpRight, SquareCheckBig } from "lucide-react";
 import { FlagIcon } from "./ui/icon/flag";
 

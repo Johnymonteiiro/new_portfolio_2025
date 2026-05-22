@@ -9,7 +9,7 @@ import {
   getRecommendations,
   getServices,
   getSidebarItems,
-} from "@/notion/queries/queries.notion";
+} from "@/sanity/lib/queries";
 import type { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {

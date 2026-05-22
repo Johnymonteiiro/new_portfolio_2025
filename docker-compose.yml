@@ -4,10 +4,12 @@ services:
       context: .
       dockerfile: DockerFile
       args:
-        NOTION_TOKEN: ${NOTION_TOKEN}
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID}
+        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET}
+        SANITY_API_READ_TOKEN: ${SANITY_API_READ_TOKEN}
         RESEND_API_KEY: ${RESEND_API_KEY}
     ports:
-      - "3000:3000"
+      - "3001:3001"
     env_file:
       - .env
     restart: always
@@ -19,7 +21,7 @@ services:
           "--no-verbose",
           "--tries=1",
           "--spider",
-          "http://localhost:3000/",
+          "http://localhost:3001/",
         ]
       interval: 30s
       timeout: 10s
